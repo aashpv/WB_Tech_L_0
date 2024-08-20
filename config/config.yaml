@@ -1,4 +1,4 @@
-storage_conn: "user=postgres password=postgres dbname=wb-order-service host=localhost port=5432 sslmode=disable"
+storage_conn: "user=your_username password=your_password dbname=wb-order-service host=localhost port=5432 sslmode=disable"
 http_server:
   address: "localhost:8090"
   timeout: 4s
