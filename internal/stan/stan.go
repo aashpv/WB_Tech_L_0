@@ -48,7 +48,7 @@ func (stn *Stan) NewStan(ch memcache.Cache) error {
 			return
 		}
 		fmt.Println("Saving successfully")
-	}, stan.StartWithLastReceived())
+	})
 	if err != nil {
 		return fmt.Errorf("error subscribing: %s", err)
 	} else {
