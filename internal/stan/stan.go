@@ -54,27 +54,6 @@ func (stn *Stan) NewStan(ch memcache.Cache) error {
 	} else {
 		fmt.Println("Subscribed to NATS Streaming")
 	}
+
 	return nil
 }
-
-//func msgHandler(m *stan.Msg) {
-//	var order model.Order
-//
-//	err := json.Unmarshal(m.Data, &order)
-//	if err != nil {
-//		fmt.Printf("Error unmarshalling: %s", err)
-//		return
-//	}
-//	fmt.Println("Unmarshalling successfully")
-//	if err := validator.New().Struct(&order); err != nil {
-//		fmt.Printf("Error validating: %s", err)
-//		return
-//	}
-//	fmt.Println("Validating successfully")
-//
-//	err = ch.SaveOrder(order)
-//	if err != nil {
-//		fmt.Printf("Error saving: %s", err)
-//		return
-//	}
-//}

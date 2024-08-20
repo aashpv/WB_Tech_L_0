@@ -24,18 +24,18 @@ func main() {
 	if err != nil {
 		log.Error("failed to init storage")
 		os.Exit(1)
-	} else {
-		log.Info("storage initialized")
 	}
+	log.Info("storage initialized")
 
 	cache := memcache.NewCache(storage)
 	log.Info("cache initialized")
+
 	err = cache.LoadOrders()
 	if err != nil {
-		log.Error("failed to load orders")
-	} else {
-		log.Info("cache is loaded")
+		log.Error("failed to load orders", "err", err)
+		os.Exit(1)
 	}
+	log.Info("cache is loaded")
 
 	stn := &stan.Stan{
 		ClusterId: cfg.NatsStreaming.ClusterId,
@@ -45,9 +45,9 @@ func main() {
 
 	if err := stn.NewStan(cache); err != nil {
 		log.Error("failed to init stan", err)
-	} else {
-		log.Info("stan initialized")
+		os.Exit(1)
 	}
+	log.Info("stan initialized")
 
 	router := chi.NewRouter()
 
