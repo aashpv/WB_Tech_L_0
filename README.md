@@ -9,7 +9,7 @@ WB Order Service — это сервис для управления заказ�
 
 ## Демо
 
-![Papermark Welcome GIF](.github/images/papermark-welcome.gif)
+![WB_Order_Service.jpg](https://sun9-47.userapi.com/impg/5Vm9I-W8QYriJLjPFC0o0IwzFBS_BVvEEYoVFw/xgvUC1PRiy8.jpg?size=1510x890&quality=96&sign=905cc8f6536d3bffc68446c28b6fefbd&type=album)
 
 ## Стек
 
