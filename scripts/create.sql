@@ -5,7 +5,7 @@ CREATE DATABASE wb_order_service;
 CREATE TABLE IF NOT EXISTS public.orders
 (
     id SERIAL PRIMARY KEY,
-    order_uid VARCHAR(255) UNIQUE NOT NULL,
+    order_uid VARCHAR(255) NOT NULL,
     track_number VARCHAR(255) NOT NULL,
     entry VARCHAR(255) NOT NULL,
     locale VARCHAR(255) NOT NULL,
@@ -21,35 +21,13 @@ CREATE TABLE IF NOT EXISTS public.orders
 ALTER TABLE IF EXISTS public.orders
     OWNER to postgres;
 
--- Table: public.delivery
-
--- DROP TABLE IF EXISTS public.delivery;
-
-CREATE TABLE IF NOT EXISTS public.delivery
-(
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    phone VARCHAR(255) NOT NULL,
-    zip VARCHAR(255) NOT NULL,
-    city VARCHAR(255) NOT NULL,
-    address VARCHAR(255) NOT NULL,
-    region VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    order_id INTEGER NOT NULL,
-    CONSTRAINT delivery_fkey FOREIGN KEY (order_id)
-        REFERENCES public.orders (id) ON DELETE CASCADE
-);
-
 ALTER TABLE IF EXISTS public.delivery
     OWNER to postgres;
-
--- Table: public.payment
-
--- DROP TABLE IF EXISTS public.payment;
 
 CREATE TABLE IF NOT EXISTS public.payment
 (
     id SERIAL PRIMARY KEY,
+    order_id INTEGER NOT NULL,
     transaction VARCHAR(255) NOT NULL,
     request_id VARCHAR(255),
     currency VARCHAR(255) NOT NULL,
@@ -60,7 +38,6 @@ CREATE TABLE IF NOT EXISTS public.payment
     delivery_cost INTEGER NOT NULL,
     goods_total INTEGER NOT NULL,
     custom_fee INTEGER NOT NULL,
-    order_id INTEGER NOT NULL,
     CONSTRAINT payment_fkey FOREIGN KEY (order_id)
         REFERENCES public.orders (id) ON DELETE CASCADE
 );
@@ -68,13 +45,10 @@ CREATE TABLE IF NOT EXISTS public.payment
 ALTER TABLE IF EXISTS public.payment
     OWNER to postgres;
 
--- Table: public.items
-
--- DROP TABLE IF EXISTS public.items;
-
 CREATE TABLE IF NOT EXISTS public.items
 (
     id SERIAL PRIMARY KEY,
+    order_id INTEGER NOT NULL,
     chrt_id BIGINT NOT NULL,
     track_number VARCHAR(255) NOT NULL,
     price INTEGER NOT NULL,
@@ -86,10 +60,24 @@ CREATE TABLE IF NOT EXISTS public.items
     nm_id BIGINT NOT NULL,
     brand VARCHAR(255) NOT NULL,
     status INTEGER NOT NULL,
-    order_id INTEGER NOT NULL,
     CONSTRAINT items_fkey FOREIGN KEY (order_id)
         REFERENCES public.orders (id) ON DELETE CASCADE
 );
 
 ALTER TABLE IF EXISTS public.items
     OWNER to postgres;
+
+CREATE TABLE IF NOT EXISTS public.delivery
+(
+    id SERIAL PRIMARY KEY,
+    order_id INTEGER NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    phone VARCHAR(255) NOT NULL,
+    zip VARCHAR(255) NOT NULL,
+    city VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    region VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    CONSTRAINT delivery_fkey FOREIGN KEY (order_id)
+        REFERENCES public.orders (id) ON DELETE CASCADE
+);
